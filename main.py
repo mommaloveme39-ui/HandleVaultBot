@@ -14,7 +14,6 @@ def check_username(message):
     username = message.text.strip().replace('@', '')
     bot.reply_to(message, f"Checking if @{username} is available...")
     
-    # Simple checker test logic
     import requests
     try:
         res = requests.get(f"https://t.me/{username}")
