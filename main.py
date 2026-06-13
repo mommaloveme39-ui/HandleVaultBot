@@ -1,23 +1,15 @@
 import os
-import threading
-from flask import Flask
-# Import your bot library here, e.g., telebot
+import telebot
 
-app = Flask('')
+# 1. Add your token
+BOT_TOKEN = "YOUR_BOT_TOKEN_HERE"
+bot = telebot.TeleBot(BOT_TOKEN)
 
-@app.route('/')
-def home():
-    return "Bot is alive!"
+# 2. Your bot's commands go here
+@bot.message_handler(commands=['start'])
+def send_welcome(message):
+    bot.reply_to(message, "Hello! The bot is working.")
 
-def run_flask():
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host='0.0.0.0', port=port)
-
-if __name__ == "__main__":
-    # Start Flask in a background thread
-    threading.Thread(target=run_flask, daemon=True).start()
-    
-    # Start your bot polling
-    # Ensure this is a blocking call (it will keep the main script running)
-    print("Starting bot polling...")
-    # e.g., bot.infinity_polling()
+# 3. Keep the bot running
+print("Starting bot polling...")
+bot.infinity_polling()
